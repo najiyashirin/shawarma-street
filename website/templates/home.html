@@ -1,0 +1,72 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Shawarma Street — authentic shawarma, made fresh daily.">
+  <title>Shawarma Street | Real Taste. Street Made.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Caveat:wght@500;600;700&family=Inter:wght@400;500;600&family=Oxanium:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="Shawarma Street home"><img src="{% static 'images/shawarma-logo.png' %}" alt="Shawarma Street"></a>
+    <button class="menu-button" type="button" aria-label="Open navigation" aria-expanded="false"><span></span><span></span><span></span></button>
+    <nav aria-label="Main navigation">
+      <a href="#menu">Menu</a><a href="#locations">Locations</a><a href="#story">Our Story</a><a href="#catering">Catering</a><a href="#franchise">Franchise</a><a href="#gallery">Gallery</a>
+    </nav>
+    <a class="button nav-order" href="#menu">Order now <b>→</b></a>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero-overlay"></div><div class="hero-spice spice-a">✦</div><div class="hero-spice spice-b">✧</div>
+      <div class="hero-content reveal">
+        <p class="script">Grilled to Perfection</p>
+        <h1><span>REAL TASTE.</span><span>FRESH MADE.</span></h1>
+        <p class="hero-text">Authentic shawarma, made fresh daily with premium ingredients, fire-grilled meat and bold, unforgettable flavours.</p>
+        <div class="hero-actions"><a class="button" href="#menu">Order now <b>→</b></a><a class="button button-outline" href="#menu">View menu</a></div>
+      </div>
+      <div class="hero-rule"><i></i><span>⌇</span><i></i></div>
+      <div class="halal-badge">
+          <img src="{% static 'assets/halal-badge.png' %}" alt="100% Halal Always Fresh">
+      </div>
+      <a class="scroll-cue" href="#menu">Scroll to taste <b>↓</b></a>
+    </section>
+
+    <section class="section menu-section" id="menu">
+      <div class="section-head reveal"><p class="kicker">The street favourites</p><h2>POPULAR <em>SHAWARMAS</em></h2><a href="#locations" class="text-link">Find a location <b>→</b></a></div>
+      <div class="menu-grid">
+        <article class="dish-card reveal"><div class="dish-image chicken"><img src="{% static 'images/shawarma-bg.png' %}" alt="Chicken shawarma"><span>Most loved</span></div><div class="dish-copy"><div><h3>Chicken Shawarma</h3><p>Chargrilled chicken, pickles, garlic sauce.</p></div><strong>₹249</strong></div><a href="#locations" class="card-order">Order this <b>→</b></a></article>
+        <article class="dish-card reveal"><div class="dish-image beef"><img src="{% static 'images/shawarma-bg.png' %}" alt="Beef shawarma"></div><div class="dish-copy"><div><h3>Beef Shawarma</h3><p>Slow-roasted beef, sumac onions, tahini.</p></div><strong>₹299</strong></div><a href="#locations" class="card-order">Order this <b>→</b></a></article>
+        <article class="dish-card reveal"><div class="dish-image mixed"><img src="{% static 'images/shawarma-bg.png' %}" alt="Mixed shawarma"></div><div class="dish-copy"><div><h3>Mixed Shawarma</h3><p>The best of both, with house-made sauce.</p></div><strong>₹329</strong></div><a href="#locations" class="card-order">Order this <b>→</b></a></article>
+      </div>
+    </section>
+
+    <section class="why-section section">
+      <div class="section-head centered reveal"><p class="kicker">No shortcuts. Ever.</p><h2>WHY SHAWARMA <em>STREET</em></h2></div>
+      <div class="why-grid">
+        <article class="reveal"><span class="line-icon">✦</span><p class="number">01</p><h3>Fresh Ingredients</h3><p>Hand-picked produce, warm bread and quality meat make every bite count.</p></article>
+        <article class="reveal"><span class="line-icon">⌁</span><p class="number">02</p><h3>Authentic Recipes</h3><p>Big flavour, time-honoured spices and a recipe that respects the craft.</p></article>
+        <article class="reveal"><span class="line-icon">♨</span><p class="number">03</p><h3>Made Daily</h3><p>We prep from scratch every day because fresh is the only way we know.</p></article>
+      </div>
+    </section>
+
+    <section class="story-section" id="story">
+      <div class="story-image reveal"><img src="{% static 'images/shawarma-bg.png' %}" alt="Freshly prepared shawarma"><div class="image-stamp">Since<br><b>2018</b></div></div>
+      <div class="story-copy reveal"><p class="script">Our kind of street food</p><h2>BORN FROM A <em>LOVE OF FLAVOUR.</em></h2><p>Shawarma Street started with one simple belief: street food should never feel ordinary. Every wrap is built around the same things we crave — real ingredients, proper spice and the satisfying char of the grill.</p><p>We bring the energy of the street to every table, serving honest food made with care and plenty of attitude.</p><a href="#gallery" class="text-link">Discover our story <b>→</b></a></div>
+    </section>
+
+    <section class="gallery-section section" id="gallery"><div class="section-head reveal"><p class="kicker">A taste of the good stuff</p><h2>THE <em>GALLERY</em></h2></div><div class="gallery-grid reveal"><figure class="gallery-large"><img src="{% static 'images/shawarma-bg.png' %}" alt="Shawarma closeup"><figcaption>Made for the craving.</figcaption></figure><figure class="gallery-tall"><img src="{% static 'images/shawarma-bg.png' %}" alt="Grilled shawarma"></figure><figure class="gallery-wide"><img src="{% static 'images/shawarma-bg.png' %}" alt="Shawarma ingredients"></figure></div></section>
+<!-- 
+    <section class="locations-section section" id="locations"><div class="section-head centered reveal"><p class="kicker">Come hungry</p><h2>FIND YOUR <em>STREET</em></h2></div><div class="location-grid"><article class="location-card reveal"><span>01 / Central</span><h3>Downtown Grill</h3><p>18 Market Street, City Centre</p><p>Mon–Sun · 11:00 AM — 11:30 PM</p><a href="#" class="text-link">Get directions <b>↗</b></a></article><article class="location-card reveal"><span>02 / East Side</span><h3>Riverside</h3><p>42 Riverside Avenue, East District</p><p>Mon–Sun · 11:00 AM — 11:30 PM</p><a href="#" class="text-link">Get directions <b>↗</b></a></article><article class="location-card reveal"><span>03 / West End</span><h3>Food Quarter</h3><p>7 The Food Quarter, West End</p><p>Mon–Sun · 11:00 AM — 11:30 PM</p><a href="#" class="text-link">Get directions <b>↗</b></a></article></div></section>
+
+    <section class="franchise" id="franchise"><div class="reveal"><p class="kicker">Bring the heat to your city</p><h2>OWN A PIECE OF<br><em>THE STREET.</em></h2><a class="button light-button" href="mailto:hello@shawarmastreet.com">Start your journey <b>→</b></a></div></section> -->
+  </main>
+  <footer id="catering"><div class="footer-top"><a class="footer-brand" href="#top"><img src="{% static 'images/shawarma-logo.png' %}" alt="Shawarma Street"></a><p>Real taste. Street made.<br>Fresh off the grill, every day.</p><div class="social"><a href="#" aria-label="Instagram">ig</a><a href="#" aria-label="Facebook">fb</a><a href="#" aria-label="TikTok">tk</a></div></div><div class="footer-bottom"><span>© 2026 Shawarma Street. All rights reserved.</span><div><a href="#menu">Menu</a><a href="#locations">Locations</a><a href="mailto:hello@shawarmastreet.com">hello@shawarmastreet.com</a></div></div></footer>
+  <script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>
