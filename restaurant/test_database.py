@@ -15,6 +15,10 @@ class DatabaseConfigurationTests(SimpleTestCase):
         })
         self.assertEqual(database_config(root, {"RESTAURANT_DATABASE_PATH": "custom.sqlite3"})["NAME"], "custom.sqlite3")
 
+    def test_vercel_requires_a_hosted_database(self):
+        with self.assertRaisesRegex(ImproperlyConfigured, "DATABASE_URL is required on Vercel"):
+            database_config(Path("unused"), {"VERCEL": "1"})
+
     def test_postgres_uses_supplied_credentials_and_options(self):
         password = token_hex(16)
         config = database_config(Path("unused"), {

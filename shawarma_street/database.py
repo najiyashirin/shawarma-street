@@ -8,6 +8,11 @@ from django.core.exceptions import ImproperlyConfigured
 def database_config(base_dir, environ=None):
     env = os.environ if environ is None else environ
     if "DATABASE_URL" not in env:
+        if env.get("VERCEL"):
+            raise ImproperlyConfigured(
+                "DATABASE_URL is required on Vercel. Use a hosted PostgreSQL database; "
+                "SQLite files are not persistent between deployments."
+            )
         return {
             "ENGINE": "django.db.backends.sqlite3",
             "NAME": env.get("RESTAURANT_DATABASE_PATH", str(base_dir / "db.sqlite3")),

@@ -13,8 +13,16 @@ if not SECRET_KEY:
         raise ImproperlyConfigured("Set DJANGO_SECRET_KEY or enable DJANGO_DEBUG for local development.")
     SECRET_KEY = "shawarma-street-local-development-only"
 
-ALLOWED_HOSTS = [host.strip() for host in os.environ.get("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1").split(",") if host.strip()]
-CSRF_TRUSTED_ORIGINS = [origin.strip() for origin in os.environ.get("DJANGO_CSRF_TRUSTED_ORIGINS", "").split(",") if origin.strip()]
+default_allowed_hosts = "localhost,127.0.0.1"
+default_csrf_trusted_origins = ""
+if os.environ.get("VERCEL"):
+    # Vercel assigns deployment-specific *.vercel.app hostnames. Custom domains
+    # must still be listed explicitly through the corresponding environment vars.
+    default_allowed_hosts += ",.vercel.app"
+    default_csrf_trusted_origins = "https://*.vercel.app"
+
+ALLOWED_HOSTS = [host.strip() for host in os.environ.get("DJANGO_ALLOWED_HOSTS", default_allowed_hosts).split(",") if host.strip()]
+CSRF_TRUSTED_ORIGINS = [origin.strip() for origin in os.environ.get("DJANGO_CSRF_TRUSTED_ORIGINS", default_csrf_trusted_origins).split(",") if origin.strip()]
 INSTALLED_APPS = [
     "django.contrib.admin", "django.contrib.auth", "django.contrib.contenttypes",
     "django.contrib.sessions", "django.contrib.messages", "django.contrib.staticfiles",

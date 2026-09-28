@@ -49,10 +49,31 @@ HTTPS redirects, secure cookies, and HSTS are enabled in production. Only the
 Vercel environment enables forwarded HTTPS headers; other trusted reverse proxies
 must be configured explicitly.
 
-Vercel runs the static collection command in `vercel.json`. Configure its Django
-entry point as `shawarma_street/wsgi.py`. Set `DATABASE_URL` for PostgreSQL as
-described below. The build command only collects static files; it does not run
-migrations or import data. No database migration runs during application startup.
+### Vercel
+
+Vercel detects `manage.py`, the WSGI entry point, and static-file configuration
+automatically; no `vercel.json` build override is needed. Before the first
+production deployment, add these **Production** environment variables in the
+Vercel project settings:
+
+```text
+DJANGO_DEBUG=false
+DJANGO_SECRET_KEY=<a newly generated, private Django secret>
+DATABASE_URL=postgresql://USER:PASSWORD@HOST:PORT/DATABASE
+DJANGO_ALLOWED_HOSTS=<project>.vercel.app,<your-custom-domain>
+DJANGO_CSRF_TRUSTED_ORIGINS=https://<project>.vercel.app,https://<your-custom-domain>
+```
+
+`DATABASE_URL` is deliberately mandatory on Vercel: SQLite and uploaded files
+are not persistent there. Create a hosted PostgreSQL database first, then run
+`python manage.py migrate` once against that database before directing visitors
+to the deployment. Do not put production database credentials in `.env`,
+`vercel.json`, or Git. Give preview deployments an isolated database and their
+own environment variables; otherwise leave them unconfigured so they fail safely
+instead of sharing production data.
+
+For generated Vercel URLs, `.vercel.app` and `https://*.vercel.app` are accepted
+automatically. Explicit environment values remain necessary for custom domains.
 
 In development, Django serves uploaded files at `/media/` when `DJANGO_DEBUG=true`.
 In production, configure the web server or a media storage service to serve that
