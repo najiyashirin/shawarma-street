@@ -174,8 +174,9 @@ contains placeholders only; environment files are not automatically loaded.
    Production. Use a separate database for Preview deployments. Also configure
    `DJANGO_DEBUG=false`, a private `DJANGO_SECRET_KEY`, exact
    `DJANGO_ALLOWED_HOSTS`, and HTTPS `DJANGO_CSRF_TRUSTED_ORIGINS` as needed.
-4. Redeploy with the existing `vercel.json` build command. Keep traffic off the new
-   deployment until migrations and setup are complete.
+4. Redeploy using Vercel's native Django detection; this project does not need a
+   `vercel.json` build override. Keep traffic off the new deployment until
+   migrations and setup are complete.
 5. From a trusted local shell or one-off CI job with this checkout, dependencies,
    and the production environment supplied securely, run:
    ```powershell
@@ -261,3 +262,97 @@ PostgreSQL instance; configuration tests alone do not verify a server connection
 References: [dj-database-url](https://pypi.org/project/dj-database-url/),
 [Psycopg installation](https://www.psycopg.org/psycopg3/docs/basic/install.html),
 [Vercel Django support](https://vercel.com/changelog/zero-configuration-django-support).
+
+## Current Vercel and Neon runbook
+
+This is the deployment setup used for Shawarma Street. Keep the actual secret,
+database URL, and passwords out of Git, screenshots, chat messages, and this file.
+They belong only in Vercel Environment Variables and in a temporary local shell
+when running Django management commands.
+
+### Vercel production variables
+
+In **Vercel > Project Settings > Environments > Production**, add these values.
+The values below use the current production domain; append every custom domain if
+one is added later.
+
+```text
+DJANGO_DEBUG=false
+DJANGO_SECRET_KEY=<new private Django secret>
+DATABASE_URL=<private Neon PostgreSQL connection string>
+DJANGO_ALLOWED_HOSTS=shawarma-street.vercel.app,.vercel.app
+DJANGO_CSRF_TRUSTED_ORIGINS=https://shawarma-street.vercel.app,https://*.vercel.app
+```
+
+Generate a secret locally, copy its output into Vercel, and do not save the
+output in a tracked file:
+
+```powershell
+.\.venv\Scripts\python.exe -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
+```
+
+Vercel detects this Django project automatically from `manage.py`; the Python
+version is pinned in `.python-version`. If a Vercel deployment still runs a
+manual `python manage.py collectstatic --noinput` Build Command, clear that
+project-level Build Command override and redeploy.
+
+### Neon PostgreSQL database
+
+Create a Neon project named `shawarma-street`, copy the full connection string
+from Neon **Connection Details**, and save it as `DATABASE_URL` in Vercel. It
+starts with `postgresql://` and is a password-equivalent secret.
+
+After creating the Neon database, run migrations from the project directory.
+The `Read-Host` prompts prevent credentials from being written into the command
+history or source files:
+
+```powershell
+$env:DATABASE_URL = Read-Host "Paste the Neon connection string"
+$env:DJANGO_SECRET_KEY = Read-Host "Paste your Django secret key"
+$env:DJANGO_DEBUG = "false"
+.\.venv\Scripts\python.exe manage.py migrate
+```
+
+Create the Django administrator in the same PowerShell window:
+
+```powershell
+.\.venv\Scripts\python.exe manage.py createsuperuser
+```
+
+Sign in at `https://shawarma-street.vercel.app/admin/`. Never create an admin
+record directly in Neon because Django must hash the password and set the staff
+and superuser permissions correctly.
+
+Neon is the production database. MongoDB Atlas may offer a free tier, but it is
+not compatible with this Django application's PostgreSQL models and migrations
+without a substantial rewrite. SQLite is for local development only and must not
+be used on Vercel because its filesystem is not persistent.
+
+### Menu baseline
+
+The intended menu is a Canadian halal-shawarma style menu, priced in CAD. Its
+five categories are **Sandwiches**, **Sides**, **Drinks**, **Platters**, and
+**Rice Dishes**. The baseline offerings are:
+
+| Category | Items |
+| --- | --- |
+| Sandwiches | Chicken Shawarma, Beef Shawarma, Gyros, Shish Tawook |
+| Sides | Fries, Poutine, Fattoush Salad, Hummus |
+| Drinks | Pop, Juice, Bottled Water, Mango Lassi |
+| Platters | Chicken Shawarma Platter, Beef Shawarma Platter, Shish Tawook Platter, Lamb Shank Quzi |
+| Rice Dishes | Chicken Shawarma Rice, Beef Shawarma Rice, Shish Tawook Rice, Beef Kabab Rice |
+
+Baseline CAD prices: sandwiches are $9.49, $9.99, $9.49, and $9.99;
+platters are $17.99, $18.99, $18.99, and $21.99; and drinks are $1.37,
+$2.99, $1.99, and $3.99, in the order listed above. Side sizes are Fries
+($5.99/$7.99/$9.99), Poutine ($6.99/$8.99/$11.99), Fattoush
+($6.99/$8.99/$10.99), and Hummus ($5.99/$9.99). Rice-dish S/M/L prices are
+Chicken ($11.99/$13.99/$16.99), Beef ($12.99/$14.99/$17.99), Shish Tawook
+($12.99/$14.99/$17.99), and Beef Kabab ($13.99/$15.99/$18.99).
+
+Use the Django admin for ordinary menu edits. Sizes are intentionally used only
+where appropriate: fries, poutine, fattoush, and rice dishes use S/M/L variants;
+hummus uses S/M; sandwiches, platters, and drinks use one listed price. Verify
+halal sourcing and current prices before publishing any menu change. Uploaded
+food images need persistent external media storage before relying on uploads in
+production; Vercel's deployed filesystem does not retain them.
