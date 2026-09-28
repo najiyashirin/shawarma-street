@@ -1,0 +1,85 @@
+/* Edit these values to customise the portal. Defaults match Django's admin.
+   Django's native colour variables also control buttons, tables and forms.
+   Keep this stylesheet separate from the public restaurant stylesheet. */
+:root {
+    --restaurant-admin-header-background: #4e0505;
+    --restaurant-admin-brand-color: #f5dd5d;
+    --restaurant-admin-header-text: #ffc;
+    --restaurant-admin-header-link: #fff;
+    --restaurant-admin-content-padding: 20px 40px;
+    --restaurant-admin-header-padding: 10px 40px;
+    --restaurant-admin-form-padding: 10px;
+    --restaurant-admin-module-gap: 30px;
+    --restaurant-admin-table-padding: 8px;
+}
+
+html[data-theme] {
+    --header-bg: var(--restaurant-admin-header-background);
+    --header-branding-color: var(--restaurant-admin-brand-color);
+    --header-color: var(--restaurant-admin-header-text);
+    --header-link-color: var(--restaurant-admin-header-link);
+}
+
+/* Light palette. Dark/automatic mode continues to use Django's native palette. */
+html[data-theme="light"] {
+    --primary: #800707;
+    --secondary: #fc0f0f;
+    --body-bg: #fff;
+    --body-fg: #333;
+    --link-fg: #f36a0f;
+    --link-hover-color: #010508;
+    --breadcrumbs-bg: #a51e0cdc;
+    --button-bg: #ff2018;
+    --button-hover-bg: #205067;
+    --default-button-bg: #800707;
+    --default-button-hover-bg: #417690;
+    --border-color: #ccc;
+    --hairline-color: #e8e8e8;
+}
+
+/* Edit these separately when customising dark mode. */
+html[data-theme="dark"] {
+    --primary: #264b5d;
+    --body-bg: #121212;
+    --body-fg: #eeeeee;
+    --link-fg: #81d4fa;
+    --link-hover-color: #4ac1f7;
+    --border-color: #353535;
+    --hairline-color: #272727;
+}
+
+/* Leave login and popup sizing to Django's purpose-built layouts. */
+body:not(.login):not(.popup) #header {
+    padding: var(--restaurant-admin-header-padding);
+}
+
+body:not(.login):not(.popup) #content {
+    padding: var(--restaurant-admin-content-padding);
+}
+
+body.change-form .form-row {
+    padding: var(--restaurant-admin-form-padding);
+}
+
+#content .module {
+    margin-bottom: var(--restaurant-admin-module-gap);
+}
+
+#result_list td, #result_list th {
+    padding: var(--restaurant-admin-table-padding);
+}
+
+@media (max-width: 1024px) {
+    :root {
+        --restaurant-admin-content-padding: 15px 20px 20px;
+        --restaurant-admin-header-padding: 15px 30px;
+    }
+}
+
+@media (max-width: 767px) {
+    :root {
+        --restaurant-admin-content-padding: 15px;
+        --restaurant-admin-header-padding: 15px;
+        --restaurant-admin-form-padding: 15px 0;
+    }
+}

@@ -1,0 +1,61 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Shawarma Street — authentic shawarma, made fresh daily.">
+  <title>{% block title %}Shawarma Street | Real Taste. Street Made.{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Caveat:wght@500;600;700&family=Inter:wght@400;500;600&family=Oxanium:wght@600;700;800&display=swap;family=Carrois+Gothic&display=swap;family=Pompiere&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'restaurant/css/restaurant.css' %}">
+<noscript><style>
+    @media (max-width:760px) {
+      .restaurant-site-header { height: auto; flex-wrap: wrap; padding-block: 8px; position: relative; }
+      .restaurant-menu-button { display: none; }
+      .restaurant-site-header nav { display: flex; position: static; flex-direction: row; flex-wrap: wrap; width: 100%; padding: 0; gap: 8px 18px; }
+    }
+  </style></noscript>
+{% block extra_css %}{% endblock %}
+</head>
+<body>
+  <a class="restaurant-skip-link" href="#restaurant-top">Skip to content</a>
+  <header class="restaurant-site-header">
+    <a class="restaurant-brand" href="{% url 'restaurant:restaurant_home' %}" aria-label="Shawarma Street home" ><img src="{% static 'restaurant/images/shawarma-street-logo.png' %}" alt="Shawarma Street"></a>
+    <button class="restaurant-menu-button" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="restaurant-navigation"><span></span><span></span><span></span></button>
+    <nav id="restaurant-navigation" aria-label="Main navigation">
+      <a href="{% url 'restaurant:restaurant_home' %}"{% if request.resolver_match.url_name == 'restaurant_home' %} aria-current="page"{% endif %}>Home</a>
+      <a href="{% url 'restaurant:restaurant_menu' %}" {% if is_full_menu %} aria-current="page"{% endif %}>Menu</a>
+      <a href="mailto:hello@shawarmastreet.com?subject=Location%20and%20ordering%20enquiry">Locations</a>
+      <a href="{% url 'restaurant:restaurant_home' %}#restaurant-story" >Our Story</a>
+      <a href="mailto:hello@shawarmastreet.com?subject=Catering%20enquiry">Catering</a>
+      <a href="mailto:hello@shawarmastreet.com?subject=Franchise%20enquiry">Franchise</a>
+      <a href="{% url 'restaurant:restaurant_home' %}#restaurant-gallery" >Gallery</a>
+    </nav>
+    <a class="restaurant-button restaurant-nav-order" href="PASTE_THE_ACTUAL_UBER_EATS_RESTAURANT_URL_HERE" target="_blank" rel="noopener noreferrer">Order now <b>→</b></a>
+  </header>
+
+  <main id="restaurant-top" tabindex="-1">
+{% block content %}{% endblock %}
+  </main>
+  <footer id="restaurant-catering">
+      <div class="restaurant-footer-top">
+      <a class="restaurant-footer-brand" href="{% url 'restaurant:restaurant_home' %}" ><img src="{% static 'restaurant/images/shawarma-street-logo.png' %}" alt="Shawarma Street"></a>
+      <p>Real taste. Street made.<br>Fresh off the grill, every day.</p>
+      <div class="restaurant-social">
+        <a href="#" aria-label="Instagram">ig</a>
+        <a href="#" aria-label="Facebook">fb</a>
+        <a href="#" aria-label="TikTok">tk</a>
+      </div>
+      </div>
+      <div class="restaurant-footer-bottom"><span>© {% now "Y" %} Shawarma Street. All rights reserved.</span>
+      <div>
+      <a href="{% url 'restaurant:restaurant_menu' %}" {% if is_full_menu %} aria-current="page"{% endif %}>Menu</a>
+      <a href="mailto:hello@shawarmastreet.com?subject=Location%20and%20ordering%20enquiry">Locations</a>
+      <a href="mailto:hello@shawarmastreet.com">hello@shawarmastreet.com</a></div></div>
+      </footer>
+  <script defer src="{% static 'restaurant/js/restaurant.js' %}"></script>
+{% block extra_js %}{% endblock %}
+</body>
+</html>

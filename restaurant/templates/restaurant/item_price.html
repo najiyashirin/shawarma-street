@@ -1,0 +1,16 @@
+{% if item.menu_variants %}
+  {% for variant in item.menu_variants %}
+    <span class="menu-variant{% if not variant.is_available or not item.is_available %} menu-variant-unavailable{% endif %}">
+      <span>{{ variant.label }}</span>
+      {% if variant.discount_price != None %}<del>${{ variant.price|floatformat:2 }}</del> <strong>${{ variant.discount_price|floatformat:2 }}</strong>{% else %}<strong>${{ variant.price|floatformat:2 }}</strong>{% endif %}
+      {% if not variant.is_available or not item.is_available %}<small>Unavailable</small>{% endif %}
+    </span>
+  {% endfor %}
+{% else %}
+                {% if item.discount_price != None %}
+                  <del aria-label="Original MRP">${{ item.mrp_price|floatformat:2 }}</del>
+                  <strong aria-label="Discount price">${{ item.discount_price|floatformat:2 }}</strong>
+                {% else %}
+                  <strong aria-label="MRP">${{ item.mrp_price|floatformat:2 }}</strong>
+                {% endif %}
+{% endif %}

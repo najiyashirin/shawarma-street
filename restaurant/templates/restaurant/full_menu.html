@@ -1,0 +1,54 @@
+{% extends "restaurant/base.html" %}
+{% load static %}
+{% block title %}Our Menu | Shawarma Street{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'restaurant/css/menu.css' %}">{% endblock %}
+{% block content %}
+<div class="full-menu">
+  <section class="full-menu-hero">
+    <div class="full-menu-container">
+      <p class="restaurant-kicker">Our menu</p>
+      <h1>Authentic<br><em>Middle Eastern</em> flavours</h1>
+      <p>Fresh ingredients. Bold flavours. Made the Shawarma Street way.</p>
+    </div>
+  </section>
+  <div class="full-menu-container">
+    {% if menu_categories %}
+    <nav class="menu-categories" aria-label="Menu categories">
+      {% for category in menu_categories %}
+      <a href="#category-{{ category.slug }}"{% if forloop.first %} aria-current="location"{% endif %}>{% if category.image %}<img src="{{ category.image.url }}" alt="" width="36" height="36">{% endif %}{{ category.name }}</a>
+      {% endfor %}
+    </nav>
+    <p class="menu-currency">All prices in CAD.</p>
+    {% endif %}
+    <div class="menu-sections">
+      {% for category in menu_categories %}
+      <section class="full-menu-category menu-layout-{{ category.layout }}" id="category-{{ category.slug }}" aria-labelledby="heading-{{ category.pk }}">
+        <h2 id="heading-{{ category.pk }}">{{ category.name }}</h2>
+        {% if category.description %}<p class="full-menu-description">{{ category.description }}</p>{% endif %}
+        <div class="full-menu-grid">
+          {% for item in category.items.all %}
+          <article class="full-menu-card{% if not item.can_order %} full-menu-unavailable{% endif %}{% if not item.image %} full-menu-no-image{% endif %}" id="menu-item-{{ item.slug }}">
+            {% if item.image %}<img class="full-menu-photo" src="{{ item.image.url }}" alt="{{ item.name }}" loading="lazy" width="160" height="180">{% endif %}
+            <div class="full-menu-copy">
+              <h3>{{ item.name }}</h3>
+              {% if item.badge_label %}<span class="menu-badge">{{ item.badge_label }}</span>{% endif %}
+              <p>{{ item.description }}</p>
+              {% if not item.can_order %}<span class="menu-unavailable-label">Unavailable</span>{% endif %}
+            </div>
+            <div class="full-menu-price">{% include "restaurant/item_price.html" %}</div>
+          </article>
+          {% empty %}<p class="restaurant-menu-empty">New dishes are coming soon.</p>{% endfor %}
+        </div>
+      </section>
+      {% empty %}<p class="restaurant-menu-empty">Our menu is being updated. Please contact us for today's dishes.</p>{% endfor %}
+    </div>
+  </div>
+  <section class="full-menu-order">
+    <div class="full-menu-container">
+      <div><p class="restaurant-kicker">Craving shawarma?</p><h2>Order now for pickup or delivery</h2></div>
+      <a class="restaurant-button" href="PASTE_THE_ACTUAL_UBER_EATS_RESTAURANT_URL_HERE" target="_blank" rel="noopener noreferrer">Order now <b>&rarr;</b></a>
+    </div>
+  </section>
+</div>
+{% endblock %}
+{% block extra_js %}<script defer src="{% static 'restaurant/js/menu.js' %}"></script>{% endblock %}

@@ -1,0 +1,45 @@
+{% load static %}
+<section class="restaurant-section restaurant-menu-section restaurant-menu-preview" id="restaurant-menu" aria-label="Restaurant menu preview">
+  <div class="restaurant-section-head">
+    <p class="restaurant-kicker">The street favourites</p>
+    <h2>A TASTE OF <em>OUR MENU</em></h2>
+  </div>
+  <div class="restaurant-preview-stage">
+    <div class="restaurant-preview-belt" role="region" aria-label="Featured dishes; scroll horizontally to explore" tabindex="0">
+      {% for category in menu_categories %}
+        {% for item in category.preview_items %}
+          <article class="restaurant-dish-card" id="menu-item-{{ item.slug }}">
+            <div class="restaurant-dish-image restaurant-{{ item.slug }}">
+              {% if item.image %}
+                <img src="{{ item.image.url }}" alt="{{ item.name }}" loading="lazy">
+              {% else %}
+                <img src="{% static 'restaurant/images/shawarma-grill.png' %}" alt="{{ item.name }}" loading="lazy">
+              {% endif %}
+              {% if not item.can_order %}<span>Unavailable</span>{% elif item.badge_label %}<span>{{ item.badge_label }}</span>{% endif %}
+            </div>
+            <div class="restaurant-dish-copy">
+              <div>
+                <p class="restaurant-preview-category">{{ category.name }}</p>
+                <h3>{{ item.name }}</h3>
+                <p>{{ item.description }}</p>
+              </div>
+              <div class="restaurant-dish-price">
+                {% include "restaurant/item_price.html" %}
+              </div>
+            </div>
+            {% if item.can_order %}
+              <a href="mailto:hello@shawarmastreet.com?subject=Order%20enquiry%3A%20{{ item.name|urlencode }}" class="restaurant-card-order" aria-label="Enquire about ordering {{ item.name }}">Order this <b>→</b></a>
+            {% else %}
+              <span class="restaurant-card-order restaurant-order-unavailable" aria-disabled="true">Unavailable</span>
+            {% endif %}
+          </article>
+        {% endfor %}
+      {% empty %}
+        <p class="restaurant-menu-empty">Our menu is being updated. Please contact us for today's dishes.</p>
+      {% endfor %}
+    </div>
+    <div class="restaurant-preview-overlay">
+      <a class="restaurant-button" href="{% url 'restaurant:restaurant_menu' %}">Explore Menu <b>&rarr;</b></a>
+    </div>
+  </div>
+</section>

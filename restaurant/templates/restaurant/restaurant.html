@@ -1,0 +1,70 @@
+{% extends "restaurant/base.html" %}
+{% load static %}
+{% block content %}
+    <section class="shawarma-hero">
+      <div class="restaurant-hero-overlay"></div>
+      <div class="restaurant-hero-spice restaurant-spice-a">✦</div>
+      <div class="restaurant-hero-spice restaurant-spice-b">✧</div>
+      <div class="restaurant-hero-content restaurant-reveal">
+        <p class="restaurant-handwritten">Grilled to Perfection</p>
+        <h1><span>REAL TASTE.</span><span>FRESH MADE.</span></h1>
+        <p class="restaurant-hero-text">Authentic shawarma, made fresh daily with premium ingredients, fire-grilled meat and bold, unforgettable flavours.</p>
+        <div class="restaurant-hero-actions">
+      <a class="restaurant-button" href="PASTE_THE_ACTUAL_UBER_EATS_RESTAURANT_URL_HERE" target="_blank" rel="noopener noreferrer">Order now <b>→</b></a>
+
+      <a class="restaurant-button restaurant-button-outline" href="/menu/">View menu</a></div>
+      </div>
+      <div class="restaurant-hero-rule"><i></i><span>⌇</span><i></i></div>
+      <div class="restaurant-halal-badge">
+          <img src="{% static 'restaurant/images/halal-seal.png' %}" alt="100% Halal Always Fresh">
+      </div>
+      <a class="restaurant-scroll-cue" href="#restaurant-menu">Scroll to taste <b>↓</b></a>
+    </section>
+
+    {% include "restaurant/menu.html" %}
+
+    <section class="restaurant-why-section restaurant-section">
+      <div class="restaurant-section-head restaurant-centered restaurant-reveal">
+      <p class="restaurant-kicker">No shortcuts. Ever.</p>
+      <h2>WHY SHAWARMA <em>STREET</em></h2></div>
+      <div class="restaurant-why-grid">
+        <article class="restaurant-reveal"><span class="restaurant-line-icon">✦</span>
+      <p class="restaurant-number">01</p>
+      <h3>Fresh Ingredients</h3>
+      <p>Hand-picked produce, warm bread and quality meat make every bite count.</p>
+      </article>
+        <article class="restaurant-reveal"><span class="restaurant-line-icon">⌁</span>
+      <p class="restaurant-number">02</p>
+      <h3>Authentic Recipes</h3>
+      <p>Big flavour, time-honoured spices and a recipe that respects the craft.</p>
+      </article>
+        <article class="restaurant-reveal"><span class="restaurant-line-icon">♨</span>
+      <p class="restaurant-number">03</p>
+      <h3>Made Daily</h3>
+      <p>We prep from scratch every day because fresh is the only way we know.</p>
+      </article>
+      </div>
+    </section>
+
+    <section class="restaurant-story-section" id="restaurant-story">
+      <div class="restaurant-story-image restaurant-reveal"><img src="{% static 'restaurant/images/shawarma-grill.png' %}" alt="Freshly prepared shawarma">
+      <div class="restaurant-image-stamp">Since<br><b>2018</b></div></div>
+      <div class="restaurant-story-copy restaurant-reveal">
+      <p class="restaurant-handwritten">Our kind of street food</p>
+      <h2>BORN FROM A <em>LOVE OF FLAVOUR.</em></h2>
+      <p>Shawarma Street started with one simple belief: street food should never feel ordinary. Every wrap is built around the same things we crave — real ingredients, proper spice and the satisfying char of the grill.</p>
+      <p>We bring the energy of the street to every table, serving honest food made with care and plenty of attitude.</p>
+      <a href="#restaurant-gallery" class="restaurant-text-link">Discover our story <b>→</b></a></div>
+    </section>
+
+    <section class="restaurant-gallery-section restaurant-section" id="restaurant-gallery">
+      <div class="restaurant-section-head restaurant-reveal">
+      <p class="restaurant-kicker">A taste of the good stuff</p>
+      <h2>THE <em>GALLERY</em></h2></div>
+      <div class="restaurant-gallery-grid restaurant-reveal">
+      <figure class="restaurant-gallery-large"><img src="{% static 'restaurant/images/shawarma-grill.png' %}" alt="Shawarma closeup"><figcaption>Made for the craving.</figcaption></figure>
+      <figure class="restaurant-gallery-tall"><img src="{% static 'restaurant/images/shawarma-grill.png' %}" alt="Grilled shawarma"></figure>
+      <figure class="restaurant-gallery-wide"><img src="{% static 'restaurant/images/shawarma-grill.png' %}" alt="Shawarma ingredients"></figure></div>
+      </section>
+
+{% endblock %}
